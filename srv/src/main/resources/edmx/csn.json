@@ -732,72 +732,31 @@
       "@Common.Label": "Incoterms",
       "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPPINGEXECUTIONSERVICE_INCOTERMS"
     },
-    "com.skipum.shippingExecution.ShippingExecutionService.PackagingTypes": {
-      "kind": "entity",
-      "source": "com.skipum.common.packaging.PackagingType",
-      "@readonly": true,
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.packaging.PackagingType..name",
-          "indexNo": 1,
-          "value": {
-            "=": "PackagingType.name"
-          },
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "origin": "com.skipum.common.packaging.PackagingType..code",
-          "indexNo": 2,
-          "value": {
-            "=": "PackagingType.code"
-          },
-          "key": true,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@description": "{i18n>packagingType}",
-          "length": 3,
-          "@Common.Label": "{i18n>packagingType}",
-          "@cds.persistence.name": "CODE"
-        }
-      },
-      "@cds.autoexpose": true,
-      "@Capabilities.DeleteRestrictions.Deletable": false,
-      "@Capabilities.InsertRestrictions.Insertable": false,
-      "@Capabilities.UpdateRestrictions.Updatable": false,
-      "@Common.Label": "Packaging Type",
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPPINGEXECUTIONSERVICE_PACKAGINGTYPES"
+    "com.skipum.shippingExecution.ShipmentProcessingStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPROCESSINGSTATUSCODE"
     },
-    "com.skipum.shippingExecution.ShippingExecutionService.ContainerTypes": {
+    "com.skipum.shippingExecution.ShipmentProcessingStatus": {
       "kind": "entity",
-      "source": "com.skipum.common.packaging.ContainerType",
-      "@readonly": true,
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
       "elements": {
         "name": {
-          "origin": "com.skipum.common.packaging.ContainerType..name",
+          "origin": "com.skipum.common.codes.CodeList..name",
           "indexNo": 1,
-          "value": {
-            "=": "ContainerType.name"
-          },
+          "@UI.HiddenFilter": true,
           "localized": true,
           "type": "cds.String",
           "length": 60,
+          "@Common.Label": "{i18n>processingStatus}",
           "@cds.persistence.name": "NAME"
         },
         "code": {
-          "origin": "com.skipum.common.packaging.ContainerType..code",
-          "indexNo": 2,
-          "value": {
-            "=": "ContainerType.code"
-          },
           "key": true,
+          "indexNo": 2,
           "type": "cds.String",
           "@Common.Text.$value": {
             "=": "name"
@@ -805,18 +764,1275 @@
           "@Common.Text.@UI.TextArrangement": {
             "#": "TextOnly"
           },
-          "@description": "{i18n>handlingUnitType}",
+          "@UI.HiddenFilter": true,
           "length": 3,
-          "@Common.Label": "{i18n>handlingUnitType}",
+          "@Common.Label": "{i18n>processingStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>processingStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPROCESSINGSTATUS"
+    },
+    "com.skipum.shippingExecution.ShipmentPackingStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPACKINGSTATUSCODE"
+    },
+    "com.skipum.shippingExecution.ShipmentPackingStatus": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>packingStatus}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>packingStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>packingStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPACKINGSTATUS"
+    },
+    "com.skipum.shippingExecution.ShipmentPrintingStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPRINTINGSTATUSCODE"
+    },
+    "com.skipum.shippingExecution.ShipmentPrintingStatus": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>printingStatus}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>printingStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>printingStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPRINTINGSTATUS"
+    },
+    "com.skipum.shippingExecution.ShipmentTransmitStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTTRANSMITSTATUSCODE"
+    },
+    "com.skipum.shippingExecution.ShipmentTransmitStatus": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>transmitStatus}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>transmitStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>transmitStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTTRANSMITSTATUS"
+    },
+    "com.skipum.shippingExecution.LegProcessingStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPROCESSINGSTATUSCODE"
+    },
+    "com.skipum.shippingExecution.LegProcessingStatus": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>processingStatus}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>processingStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>processingStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPROCESSINGSTATUS"
+    },
+    "com.skipum.shippingExecution.LegPackingStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPACKINGSTATUSCODE"
+    },
+    "com.skipum.shippingExecution.LegPackingStatus": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>packingStatus}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>packingStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>packingStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPACKINGSTATUS"
+    },
+    "com.skipum.shippingExecution.LegPrintingStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPRINTINGSTATUSCODE"
+    },
+    "com.skipum.shippingExecution.LegPrintingStatus": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>printingStatus}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>printingStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>printingStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPRINTINGSTATUS"
+    },
+    "com.skipum.shippingExecution.LegTransmitStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGTRANSMITSTATUSCODE"
+    },
+    "com.skipum.shippingExecution.LegTransmitStatus": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>transmitStatus}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>transmitStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>transmitStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGTRANSMITSTATUS"
+    },
+    "com.skipum.shippingExecution.ManifestProcessingStatusCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_MANIFESTPROCESSINGSTATUSCODE"
+    },
+    "com.skipum.shippingExecution.ManifestProcessingStatus": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>processingStatus}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>processingStatusCode}",
+          "@cds.persistence.name": "CODE"
+        },
+        "criticality": {
+          "indexNo": 3,
+          "type": "cds.Integer",
+          "@UI.HiddenFilter": true,
+          "@UI.Hidden": true,
+          "@cds.persistence.name": "CRITICALITY"
+        }
+      },
+      "@UI.DataPoint#StatusCriticality.Value": {
+        "=": "code"
+      },
+      "@UI.DataPoint#StatusCriticality.Criticality": {
+        "=": "criticality"
+      },
+      "@UI.DataPoint#StatusCriticality.Title": "{i18n>processingStatus}",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_MANIFESTPROCESSINGSTATUS"
+    },
+    "com.skipum.shippingExecution.PaymentTermCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PAYMENTTERMCODE"
+    },
+    "com.skipum.shippingExecution.PaymentTerm": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>paymentTerms}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>paymentTermsCode}",
           "@cds.persistence.name": "CODE"
         }
       },
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
       "@cds.autoexpose": true,
-      "@Capabilities.DeleteRestrictions.Deletable": false,
-      "@Capabilities.InsertRestrictions.Insertable": false,
-      "@Capabilities.UpdateRestrictions.Updatable": false,
-      "@Common.Label": "Container Type",
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPPINGEXECUTIONSERVICE_CONTAINERTYPES"
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PAYMENTTERM"
+    },
+    "com.skipum.shippingExecution.IncoTermCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_INCOTERMCODE"
+    },
+    "com.skipum.shippingExecution.Incoterm": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>incoTerms}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>incoTermsCode}",
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_INCOTERM"
+    },
+    "com.skipum.shippingExecution.PayerCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 3,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PAYERCODE"
+    },
+    "com.skipum.shippingExecution.Payer": {
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.codes.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "com.skipum.common.codes.CodeList..name",
+          "indexNo": 1,
+          "@UI.HiddenFilter": true,
+          "localized": true,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>carrierPayer}",
+          "@cds.persistence.name": "NAME"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "@Common.Text.$value": {
+            "=": "name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@UI.HiddenFilter": true,
+          "length": 3,
+          "@Common.Label": "{i18n>carrierPayerCode}",
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.autoexpose": true,
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PAYER"
+    },
+    "com.skipum.shippingExecution.Value": {
+      "kind": "type",
+      "type": "cds.Decimal",
+      "precision": 15,
+      "scale": 2,
+      "@Common.Label": "{i18n>amount}",
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_VALUE"
+    },
+    "com.skipum.shippingExecution.Amount": {
+      "kind": "type",
+      "elements": {
+        "amount": {
+          "indexNo": 1,
+          "type": "cds.Decimal",
+          "@ms.ISOCurrency": {
+            "=": "currency"
+          },
+          "precision": 15,
+          "scale": 2,
+          "@Common.Label": "{i18n>amount}",
+          "@cds.persistence.name": "AMOUNT"
+        },
+        "currency": {
+          "indexNo": 2,
+          "type": "com.skipum.common.currency.Currency",
+          "@Common.Text.$value": {
+            "=": "cy.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.entity": "Currencies",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@UI.Identification": [
+            {
+              "$Type": "UI.DataField",
+              "Value": {
+                "=": "name"
+              }
+            }
+          ],
+          "@cds.autoexpose": true,
+          "@Common.Label": "{i18n>currencies}",
+          "@cds.persistence.name": "CURRENCY"
+        }
+      },
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_AMOUNT"
+    },
+    "com.skipum.shippingExecution.ShipDate": {
+      "kind": "type",
+      "type": "cds.Date",
+      "@Common.Label": "{i18n>shipDate}",
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPDATE"
+    },
+    "com.skipum.shippingExecution.Partner": {
+      "abstract": true,
+      "kind": "entity",
+      "includes": [
+        "com.skipum.common.businessPartner.BusinessAddress"
+      ],
+      "elements": {
+        "address1": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..address1",
+          "indexNo": 1,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>addressLine}",
+          "@cds.persistence.name": "ADDRESS1"
+        },
+        "address2": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..address2",
+          "indexNo": 2,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>addressLine}",
+          "@cds.persistence.name": "ADDRESS2"
+        },
+        "address3": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..address3",
+          "indexNo": 3,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>addressLine}",
+          "@cds.persistence.name": "ADDRESS3"
+        },
+        "city": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..city",
+          "indexNo": 4,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>city}",
+          "@cds.persistence.name": "CITY"
+        },
+        "postalCode": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..postalCode",
+          "indexNo": 5,
+          "type": "cds.String",
+          "length": 15,
+          "@Common.Label": "{i18n>postalCode}",
+          "@cds.persistence.name": "POSTALCODE"
+        },
+        "region": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..region",
+          "indexNo": 6,
+          "type": "cds.Association",
+          "target": "com.skipum.common.geographic.Region",
+          "@Common.Text.$value": {
+            "=": "region.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.entity": "Regions",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "foreignKeys": {
+            "code": {
+              "origin": "com.skipum.common.businessPartner.BusinessAddress..region.code",
+              "indexNo": 1,
+              "path": "code",
+              "generatedFieldName": "region_code",
+              "@cds.persistence.name": "CODE"
+            },
+            "country_code": {
+              "path": "country_code",
+              "generatedFieldName": "region_country_code",
+              "@cds.persistence.name": "COUNTRY_CODE"
+            }
+          },
+          "@cds.persistence.name": "REGION"
+        },
+        "country": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..country",
+          "indexNo": 7,
+          "type": "cds.Association",
+          "target": "com.skipum.common.geographic.Country",
+          "@Common.Text.$value": {
+            "=": "country.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.entity": "Countries",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "foreignKeys": {
+            "code": {
+              "origin": "com.skipum.common.businessPartner.BusinessAddress..country.code",
+              "indexNo": 1,
+              "path": "code",
+              "generatedFieldName": "country_code",
+              "@cds.persistence.name": "CODE"
+            }
+          },
+          "@cds.persistence.name": "COUNTRY"
+        },
+        "poBox": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..poBox",
+          "indexNo": 8,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>pOBox}",
+          "@cds.persistence.name": "POBOX"
+        },
+        "addressee": {
+          "origin": "com.skipum.common.businessPartner.BusinessAddress..addressee",
+          "indexNo": 9,
+          "type": "cds.String",
+          "length": 60,
+          "@Common.Label": "{i18n>addressee}",
+          "@cds.persistence.name": "ADDRESSEE"
+        },
+        "partnerType": {
+          "key": true,
+          "indexNo": 11,
+          "type": "cds.Association",
+          "target": "com.skipum.common.businessPartner.PartnerTypes",
+          "@Common.Updatable": false,
+          "@Common.Creatable": false,
+          "@Common.Text.$value": {
+            "=": "partnerType.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.entity": "PartnerTypes",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.FieldControl": {
+            "#": "ReadOnly"
+          },
+          "foreignKeys": {
+            "code": {
+              "path": "code",
+              "indexNo": 1,
+              "generatedFieldName": "partnerType_code",
+              "@cds.persistence.name": "CODE"
+            }
+          },
+          "@cds.persistence.name": "PARTNERTYPE"
+        },
+        "communicationMethod_businessPhone": {
+          "indexNo": 1,
+          "type": "cds.String",
+          "@description": "{i18n>businessPhoneNumber}",
+          "@Communication.IsPhoneNumber": {
+            "#": "work"
+          },
+          "length": 20,
+          "viaTransform": true,
+          "@Common.Label": "{i18n>businessPhoneNumber}",
+          "@cds.persistence.name": "COMMUNICATIONMETHOD_BUSINESSPHONE"
+        },
+        "communicationMethod_mobilePhone": {
+          "indexNo": 2,
+          "type": "cds.String",
+          "@description": "{i18n>mobilePhoneNumber}",
+          "@Communication.IsPhoneNumber": {
+            "#": "cell"
+          },
+          "length": 20,
+          "viaTransform": true,
+          "@Common.Label": "{i18n>mobilePhoneNumber}",
+          "@cds.persistence.name": "COMMUNICATIONMETHOD_MOBILEPHONE"
+        },
+        "communicationMethod_fax": {
+          "indexNo": 3,
+          "type": "cds.String",
+          "@description": "{i18n>faxNumber}",
+          "@Communication.IsPhoneNumber": {
+            "#": "fax"
+          },
+          "length": 20,
+          "viaTransform": true,
+          "@Common.Label": "{i18n>faxNumber}",
+          "@cds.persistence.name": "COMMUNICATIONMETHOD_FAX"
+        },
+        "communicationMethod_email": {
+          "indexNo": 4,
+          "type": "cds.String",
+          "@Communication.IsEmailAddress": true,
+          "length": 120,
+          "viaTransform": true,
+          "@Common.Label": "{i18n>emailAddress}",
+          "@cds.persistence.name": "COMMUNICATIONMETHOD_EMAIL"
+        },
+        "region_code": {
+          "type": "cds.String",
+          "length": 3,
+          "@odata.foreignKey4": "region",
+          "@Common.Text.$value": {
+            "=": "region.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.entity": "Regions",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@cds.persistence.name": "REGION_CODE"
+        },
+        "region_country_code": {
+          "type": "cds.String",
+          "length": 3,
+          "@odata.foreignKey4": "region",
+          "@Common.Text.$value": {
+            "=": "region.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.entity": "Regions",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@cds.persistence.name": "REGION_COUNTRY_CODE"
+        },
+        "country_code": {
+          "type": "cds.String",
+          "length": 3,
+          "@odata.foreignKey4": "country",
+          "@Common.Text.$value": {
+            "=": "country.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextFirst"
+          },
+          "@Common.ValueList.entity": "Countries",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@cds.persistence.name": "COUNTRY_CODE"
+        },
+        "partnerType_code": {
+          "type": "cds.String",
+          "length": 3,
+          "key": true,
+          "@odata.foreignKey4": "partnerType",
+          "@Common.Updatable": false,
+          "@Common.Creatable": false,
+          "@Common.Text.$value": {
+            "=": "partnerType.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.entity": "PartnerTypes",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.FieldControl": {
+            "#": "ReadOnly"
+          },
+          "@cds.persistence.name": "PARTNERTYPE_CODE"
+        }
+      },
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PARTNER"
+    },
+    "com.skipum.shippingExecution.DeliveryAttributes": {
+      "kind": "type",
+      "elements": {
+        "appointmentRequired": {
+          "indexNo": 1,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>appointmentRequired}",
+          "@cds.persistence.name": "APPOINTMENTREQUIRED"
+        },
+        "deliverToDoor": {
+          "indexNo": 2,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>deliverToDoor}",
+          "@cds.persistence.name": "DELIVERTODOOR"
+        },
+        "directDelivery": {
+          "indexNo": 3,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>directDelivery}",
+          "@cds.persistence.name": "DIRECTDELIVERY"
+        },
+        "eveningDelivery": {
+          "indexNo": 4,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>eveningDelivery}",
+          "@cds.persistence.name": "EVENINGDELIVERY"
+        },
+        "forkliftRequired": {
+          "indexNo": 5,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>forkliftRequired}",
+          "@cds.persistence.name": "FORKLIFTREQUIRED"
+        },
+        "helperRequired": {
+          "indexNo": 6,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>helperRequired}",
+          "@cds.persistence.name": "HELPERREQUIRED"
+        },
+        "holidayDelivery": {
+          "indexNo": 7,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>holidayDelivery}",
+          "@cds.persistence.name": "HOLIDAYDELIVERY"
+        },
+        "insideDelivery": {
+          "indexNo": 8,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>insideDelivery}",
+          "@cds.persistence.name": "INSIDEDELIVERY"
+        },
+        "liftgateRequired": {
+          "indexNo": 9,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>liftgateRequired}",
+          "@cds.persistence.name": "LIFTGATEREQUIRED"
+        },
+        "palletJackRequired": {
+          "indexNo": 10,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>palletJackRequired}",
+          "@cds.persistence.name": "PALLETJACKREQUIRED"
+        },
+        "saturdayDelivery": {
+          "indexNo": 11,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>saturdayDelivery}",
+          "@cds.persistence.name": "SATURDAYDELIVERY"
+        },
+        "specialDelivery": {
+          "indexNo": 12,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>specialDelivery}",
+          "@cds.persistence.name": "SPECIALDELIVERY"
+        },
+        "stairDelivery": {
+          "indexNo": 13,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>stairDelivery}",
+          "@cds.persistence.name": "STAIRDELIVERY"
+        },
+        "sundayDelivery": {
+          "indexNo": 14,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>sundayDelivery}",
+          "@cds.persistence.name": "SUNDAYDELIVERY"
+        },
+        "unpackedUncrate": {
+          "indexNo": 15,
+          "type": "cds.Boolean",
+          "@Common.Label": "{i18n>unpackedUncrate}",
+          "@cds.persistence.name": "UNPACKEDUNCRATE"
+        }
+      },
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_DELIVERYATTRIBUTES"
+    },
+    "com.skipum.shippingExecution.CarrierAccount": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 50,
+      "@Common.Label": "{i18n>carrierAccount}",
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_CARRIERACCOUNT"
+    },
+    "com.skipum.shippingExecution.Enabled": {
+      "kind": "type",
+      "type": "cds.Boolean",
+      "@Common.Label": "{i18n>enabled}",
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_ENABLED"
+    },
+    "com.skipum.shippingExecution.CarrierPayer": {
+      "kind": "entity",
+      "elements": {
+        "payer": {
+          "indexNo": 1,
+          "type": "cds.Association",
+          "target": "com.skipum.shippingExecution.Payer",
+          "@Common.Text.$value": {
+            "=": "payer.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.entity": "CarrierPayers",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "foreignKeys": {
+            "code": {
+              "path": "code",
+              "indexNo": 1,
+              "generatedFieldName": "payer_code",
+              "@cds.persistence.name": "CODE"
+            }
+          },
+          "@Common.Label": "{i18n>carrierPayer}",
+          "@cds.persistence.name": "PAYER"
+        },
+        "account": {
+          "indexNo": 2,
+          "type": "cds.String",
+          "length": 50,
+          "@Common.Label": "{i18n>carrierAccount}",
+          "@cds.persistence.name": "ACCOUNT"
+        },
+        "payer_code": {
+          "type": "cds.String",
+          "length": 3,
+          "@odata.foreignKey4": "payer",
+          "@Common.Text.$value": {
+            "=": "payer.name"
+          },
+          "@Common.Text.@UI.TextArrangement": {
+            "#": "TextOnly"
+          },
+          "@Common.ValueList.entity": "CarrierPayers",
+          "@Common.ValueList.type": {
+            "#": "fixed"
+          },
+          "@Common.ValueListWithFixedValues": true,
+          "@Common.Label": "{i18n>carrierPayer}",
+          "@cds.persistence.name": "PAYER_CODE"
+        }
+      },
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_CARRIERPAYER"
+    },
+    "com.skipum.shippingExecution.RequiredDeliveryDate": {
+      "kind": "type",
+      "type": "cds.Date",
+      "@Common.Label": "{i18n>requiredDeliveryDate}",
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_REQUIREDDELIVERYDATE"
+    },
+    "com.skipum.shippingExecution.RequestedDeliveryDate": {
+      "kind": "type",
+      "type": "cds.Date",
+      "@Common.Label": "{i18n>requestedDeliveryDate}",
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_REQUESTEDDELIVERYDATE"
+    },
+    "com.skipum.shippingExecution.ShippingDates": {
+      "kind": "type",
+      "elements": {
+        "shipDate": {
+          "indexNo": 1,
+          "type": "cds.Date",
+          "@Common.Label": "{i18n>shipDate}",
+          "@cds.persistence.name": "SHIPDATE"
+        },
+        "requestedDeliveryDate": {
+          "indexNo": 2,
+          "type": "cds.Date",
+          "@Common.Label": "{i18n>requestedDeliveryDate}",
+          "@cds.persistence.name": "REQUESTEDDELIVERYDATE"
+        },
+        "requiredDeliveryDate": {
+          "indexNo": 3,
+          "type": "cds.Date",
+          "@Common.Label": "{i18n>requiredDeliveryDate}",
+          "@cds.persistence.name": "REQUIREDDELIVERYDATE"
+        }
+      },
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPPINGDATES"
+    },
+    "com.skipum.shippingExecution.References": {
+      "kind": "type",
+      "elements": {
+        "shipper": {
+          "indexNo": 1,
+          "type": "cds.String",
+          "length": 50,
+          "@Common.Label": "{i18n>shipperReference}",
+          "@cds.persistence.name": "SHIPPER"
+        },
+        "consignee": {
+          "indexNo": 2,
+          "type": "cds.String",
+          "length": 50,
+          "@Common.Label": "{i18n>consigneeReference}",
+          "@cds.persistence.name": "CONSIGNEE"
+        },
+        "miscellaneous1": {
+          "indexNo": 3,
+          "type": "cds.String",
+          "length": 50,
+          "@Common.Label": "{i18n>miscellaneousReference1}",
+          "@cds.persistence.name": "MISCELLANEOUS1"
+        },
+        "miscellaneous2": {
+          "indexNo": 4,
+          "type": "cds.String",
+          "length": 50,
+          "@Common.Label": "{i18n>miscellaneousReference2}",
+          "@cds.persistence.name": "MISCELLANEOUS2"
+        },
+        "miscellaneous3": {
+          "indexNo": 5,
+          "type": "cds.String",
+          "length": 50,
+          "@Common.Label": "{i18n>miscellaneousReference3}",
+          "@cds.persistence.name": "MISCELLANEOUS3"
+        },
+        "miscellaneous4": {
+          "indexNo": 6,
+          "type": "cds.String",
+          "length": 50,
+          "@Common.Label": "{i18n>miscellaneousReference4}",
+          "@cds.persistence.name": "MISCELLANEOUS4"
+        },
+        "miscellaneous5": {
+          "indexNo": 7,
+          "type": "cds.String",
+          "length": 50,
+          "@Common.Label": "{i18n>miscellaneousReference5}",
+          "@cds.persistence.name": "MISCELLANEOUS5"
+        }
+      },
+      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_REFERENCES"
     },
     "com.skipum.common.address.Addressee": {
       "kind": "type",
@@ -4300,1308 +5516,6 @@
       },
       "@cds.autoexpose": true,
       "@cds.persistence.name": "COM_SKIPUM_COMMON_PACKAGING_CONTAINERTYPE"
-    },
-    "com.skipum.shippingExecution.ShipmentProcessingStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPROCESSINGSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.ShipmentProcessingStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>processingStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>processingStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>processingStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPROCESSINGSTATUS"
-    },
-    "com.skipum.shippingExecution.ShipmentPackingStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPACKINGSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.ShipmentPackingStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>packingStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>packingStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>packingStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPACKINGSTATUS"
-    },
-    "com.skipum.shippingExecution.ShipmentPrintingStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPRINTINGSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.ShipmentPrintingStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>printingStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>printingStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>printingStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTPRINTINGSTATUS"
-    },
-    "com.skipum.shippingExecution.ShipmentTransmitStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTTRANSMITSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.ShipmentTransmitStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>transmitStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>transmitStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>transmitStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPMENTTRANSMITSTATUS"
-    },
-    "com.skipum.shippingExecution.LegProcessingStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPROCESSINGSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.LegProcessingStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>processingStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>processingStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>processingStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPROCESSINGSTATUS"
-    },
-    "com.skipum.shippingExecution.LegPackingStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPACKINGSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.LegPackingStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>packingStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>packingStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>packingStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPACKINGSTATUS"
-    },
-    "com.skipum.shippingExecution.LegPrintingStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPRINTINGSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.LegPrintingStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>printingStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>printingStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>printingStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGPRINTINGSTATUS"
-    },
-    "com.skipum.shippingExecution.LegTransmitStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGTRANSMITSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.LegTransmitStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>transmitStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>transmitStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>transmitStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_LEGTRANSMITSTATUS"
-    },
-    "com.skipum.shippingExecution.ManifestProcessingStatusCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_MANIFESTPROCESSINGSTATUSCODE"
-    },
-    "com.skipum.shippingExecution.ManifestProcessingStatus": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>processingStatus}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>processingStatusCode}",
-          "@cds.persistence.name": "CODE"
-        },
-        "criticality": {
-          "indexNo": 3,
-          "type": "cds.Integer",
-          "@UI.HiddenFilter": true,
-          "@UI.Hidden": true,
-          "@cds.persistence.name": "CRITICALITY"
-        }
-      },
-      "@UI.DataPoint#StatusCriticality.Value": {
-        "=": "code"
-      },
-      "@UI.DataPoint#StatusCriticality.Criticality": {
-        "=": "criticality"
-      },
-      "@UI.DataPoint#StatusCriticality.Title": "{i18n>processingStatus}",
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_MANIFESTPROCESSINGSTATUS"
-    },
-    "com.skipum.shippingExecution.PaymentTermCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PAYMENTTERMCODE"
-    },
-    "com.skipum.shippingExecution.PaymentTerm": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>paymentTerms}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>paymentTermsCode}",
-          "@cds.persistence.name": "CODE"
-        }
-      },
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PAYMENTTERM"
-    },
-    "com.skipum.shippingExecution.IncoTermCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_INCOTERMCODE"
-    },
-    "com.skipum.shippingExecution.Incoterm": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>incoTerms}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>incoTermsCode}",
-          "@cds.persistence.name": "CODE"
-        }
-      },
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_INCOTERM"
-    },
-    "com.skipum.shippingExecution.PayerCode": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 3,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PAYERCODE"
-    },
-    "com.skipum.shippingExecution.Payer": {
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.codes.CodeList"
-      ],
-      "elements": {
-        "name": {
-          "origin": "com.skipum.common.codes.CodeList..name",
-          "indexNo": 1,
-          "@UI.HiddenFilter": true,
-          "localized": true,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>carrierPayer}",
-          "@cds.persistence.name": "NAME"
-        },
-        "code": {
-          "key": true,
-          "indexNo": 2,
-          "type": "cds.String",
-          "@Common.Text.$value": {
-            "=": "name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@UI.HiddenFilter": true,
-          "length": 3,
-          "@Common.Label": "{i18n>carrierPayerCode}",
-          "@cds.persistence.name": "CODE"
-        }
-      },
-      "@UI.Identification": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "name"
-          }
-        }
-      ],
-      "@cds.autoexpose": true,
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PAYER"
-    },
-    "com.skipum.shippingExecution.Value": {
-      "kind": "type",
-      "type": "cds.Decimal",
-      "precision": 15,
-      "scale": 2,
-      "@Common.Label": "{i18n>amount}",
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_VALUE"
-    },
-    "com.skipum.shippingExecution.Amount": {
-      "kind": "type",
-      "elements": {
-        "amount": {
-          "indexNo": 1,
-          "type": "cds.Decimal",
-          "@ms.ISOCurrency": {
-            "=": "currency"
-          },
-          "precision": 15,
-          "scale": 2,
-          "@Common.Label": "{i18n>amount}",
-          "@cds.persistence.name": "AMOUNT"
-        },
-        "currency": {
-          "indexNo": 2,
-          "type": "com.skipum.common.currency.Currency",
-          "@Common.Text.$value": {
-            "=": "cy.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextFirst"
-          },
-          "@Common.ValueList.entity": "Currencies",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "@UI.Identification": [
-            {
-              "$Type": "UI.DataField",
-              "Value": {
-                "=": "name"
-              }
-            }
-          ],
-          "@cds.autoexpose": true,
-          "@Common.Label": "{i18n>currencies}",
-          "@cds.persistence.name": "CURRENCY"
-        }
-      },
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_AMOUNT"
-    },
-    "com.skipum.shippingExecution.ShipDate": {
-      "kind": "type",
-      "type": "cds.Date",
-      "@Common.Label": "{i18n>shipDate}",
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPDATE"
-    },
-    "com.skipum.shippingExecution.Partner": {
-      "abstract": true,
-      "kind": "entity",
-      "includes": [
-        "com.skipum.common.businessPartner.BusinessAddress"
-      ],
-      "elements": {
-        "address1": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..address1",
-          "indexNo": 1,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>addressLine}",
-          "@cds.persistence.name": "ADDRESS1"
-        },
-        "address2": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..address2",
-          "indexNo": 2,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>addressLine}",
-          "@cds.persistence.name": "ADDRESS2"
-        },
-        "address3": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..address3",
-          "indexNo": 3,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>addressLine}",
-          "@cds.persistence.name": "ADDRESS3"
-        },
-        "city": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..city",
-          "indexNo": 4,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>city}",
-          "@cds.persistence.name": "CITY"
-        },
-        "postalCode": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..postalCode",
-          "indexNo": 5,
-          "type": "cds.String",
-          "length": 15,
-          "@Common.Label": "{i18n>postalCode}",
-          "@cds.persistence.name": "POSTALCODE"
-        },
-        "region": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..region",
-          "indexNo": 6,
-          "type": "cds.Association",
-          "target": "com.skipum.common.geographic.Region",
-          "@Common.Text.$value": {
-            "=": "region.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextFirst"
-          },
-          "@Common.ValueList.entity": "Regions",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "foreignKeys": {
-            "code": {
-              "origin": "com.skipum.common.businessPartner.BusinessAddress..region.code",
-              "indexNo": 1,
-              "path": "code",
-              "generatedFieldName": "region_code",
-              "@cds.persistence.name": "CODE"
-            },
-            "country_code": {
-              "path": "country_code",
-              "generatedFieldName": "region_country_code",
-              "@cds.persistence.name": "COUNTRY_CODE"
-            }
-          },
-          "@cds.persistence.name": "REGION"
-        },
-        "country": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..country",
-          "indexNo": 7,
-          "type": "cds.Association",
-          "target": "com.skipum.common.geographic.Country",
-          "@Common.Text.$value": {
-            "=": "country.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextFirst"
-          },
-          "@Common.ValueList.entity": "Countries",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "foreignKeys": {
-            "code": {
-              "origin": "com.skipum.common.businessPartner.BusinessAddress..country.code",
-              "indexNo": 1,
-              "path": "code",
-              "generatedFieldName": "country_code",
-              "@cds.persistence.name": "CODE"
-            }
-          },
-          "@cds.persistence.name": "COUNTRY"
-        },
-        "poBox": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..poBox",
-          "indexNo": 8,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>pOBox}",
-          "@cds.persistence.name": "POBOX"
-        },
-        "addressee": {
-          "origin": "com.skipum.common.businessPartner.BusinessAddress..addressee",
-          "indexNo": 9,
-          "type": "cds.String",
-          "length": 60,
-          "@Common.Label": "{i18n>addressee}",
-          "@cds.persistence.name": "ADDRESSEE"
-        },
-        "partnerType": {
-          "key": true,
-          "indexNo": 11,
-          "type": "cds.Association",
-          "target": "com.skipum.common.businessPartner.PartnerTypes",
-          "@Common.Updatable": false,
-          "@Common.Creatable": false,
-          "@Common.Text.$value": {
-            "=": "partnerType.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@Common.ValueList.entity": "PartnerTypes",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "@Common.FieldControl": {
-            "#": "ReadOnly"
-          },
-          "foreignKeys": {
-            "code": {
-              "path": "code",
-              "indexNo": 1,
-              "generatedFieldName": "partnerType_code",
-              "@cds.persistence.name": "CODE"
-            }
-          },
-          "@cds.persistence.name": "PARTNERTYPE"
-        },
-        "communicationMethod_businessPhone": {
-          "indexNo": 1,
-          "type": "cds.String",
-          "@description": "{i18n>businessPhoneNumber}",
-          "@Communication.IsPhoneNumber": {
-            "#": "work"
-          },
-          "length": 20,
-          "@Common.Label": "{i18n>businessPhoneNumber}",
-          "viaTransform": true,
-          "@cds.persistence.name": "COMMUNICATIONMETHOD_BUSINESSPHONE"
-        },
-        "communicationMethod_mobilePhone": {
-          "indexNo": 2,
-          "type": "cds.String",
-          "@description": "{i18n>mobilePhoneNumber}",
-          "@Communication.IsPhoneNumber": {
-            "#": "cell"
-          },
-          "length": 20,
-          "@Common.Label": "{i18n>mobilePhoneNumber}",
-          "viaTransform": true,
-          "@cds.persistence.name": "COMMUNICATIONMETHOD_MOBILEPHONE"
-        },
-        "communicationMethod_fax": {
-          "indexNo": 3,
-          "type": "cds.String",
-          "@description": "{i18n>faxNumber}",
-          "@Communication.IsPhoneNumber": {
-            "#": "fax"
-          },
-          "length": 20,
-          "@Common.Label": "{i18n>faxNumber}",
-          "viaTransform": true,
-          "@cds.persistence.name": "COMMUNICATIONMETHOD_FAX"
-        },
-        "communicationMethod_email": {
-          "indexNo": 4,
-          "type": "cds.String",
-          "@Communication.IsEmailAddress": true,
-          "length": 120,
-          "@Common.Label": "{i18n>emailAddress}",
-          "viaTransform": true,
-          "@cds.persistence.name": "COMMUNICATIONMETHOD_EMAIL"
-        },
-        "region_code": {
-          "type": "cds.String",
-          "length": 3,
-          "@odata.foreignKey4": "region",
-          "@Common.Text.$value": {
-            "=": "region.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextFirst"
-          },
-          "@Common.ValueList.entity": "Regions",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "@cds.persistence.name": "REGION_CODE"
-        },
-        "region_country_code": {
-          "type": "cds.String",
-          "length": 3,
-          "@odata.foreignKey4": "region",
-          "@Common.Text.$value": {
-            "=": "region.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextFirst"
-          },
-          "@Common.ValueList.entity": "Regions",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "@cds.persistence.name": "REGION_COUNTRY_CODE"
-        },
-        "country_code": {
-          "type": "cds.String",
-          "length": 3,
-          "@odata.foreignKey4": "country",
-          "@Common.Text.$value": {
-            "=": "country.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextFirst"
-          },
-          "@Common.ValueList.entity": "Countries",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "@cds.persistence.name": "COUNTRY_CODE"
-        },
-        "partnerType_code": {
-          "type": "cds.String",
-          "length": 3,
-          "key": true,
-          "@odata.foreignKey4": "partnerType",
-          "@Common.Updatable": false,
-          "@Common.Creatable": false,
-          "@Common.Text.$value": {
-            "=": "partnerType.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@Common.ValueList.entity": "PartnerTypes",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "@Common.FieldControl": {
-            "#": "ReadOnly"
-          },
-          "@cds.persistence.name": "PARTNERTYPE_CODE"
-        }
-      },
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_PARTNER"
-    },
-    "com.skipum.shippingExecution.DeliveryAttributes": {
-      "kind": "type",
-      "elements": {
-        "appointmentRequired": {
-          "indexNo": 1,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>appointmentRequired}",
-          "@cds.persistence.name": "APPOINTMENTREQUIRED"
-        },
-        "deliverToDoor": {
-          "indexNo": 2,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>deliverToDoor}",
-          "@cds.persistence.name": "DELIVERTODOOR"
-        },
-        "directDelivery": {
-          "indexNo": 3,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>directDelivery}",
-          "@cds.persistence.name": "DIRECTDELIVERY"
-        },
-        "eveningDelivery": {
-          "indexNo": 4,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>eveningDelivery}",
-          "@cds.persistence.name": "EVENINGDELIVERY"
-        },
-        "forkliftRequired": {
-          "indexNo": 5,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>forkliftRequired}",
-          "@cds.persistence.name": "FORKLIFTREQUIRED"
-        },
-        "helperRequired": {
-          "indexNo": 6,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>helperRequired}",
-          "@cds.persistence.name": "HELPERREQUIRED"
-        },
-        "holidayDelivery": {
-          "indexNo": 7,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>holidayDelivery}",
-          "@cds.persistence.name": "HOLIDAYDELIVERY"
-        },
-        "insideDelivery": {
-          "indexNo": 8,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>insideDelivery}",
-          "@cds.persistence.name": "INSIDEDELIVERY"
-        },
-        "liftgateRequired": {
-          "indexNo": 9,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>liftgateRequired}",
-          "@cds.persistence.name": "LIFTGATEREQUIRED"
-        },
-        "palletJackRequired": {
-          "indexNo": 10,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>palletJackRequired}",
-          "@cds.persistence.name": "PALLETJACKREQUIRED"
-        },
-        "saturdayDelivery": {
-          "indexNo": 11,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>saturdayDelivery}",
-          "@cds.persistence.name": "SATURDAYDELIVERY"
-        },
-        "specialDelivery": {
-          "indexNo": 12,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>specialDelivery}",
-          "@cds.persistence.name": "SPECIALDELIVERY"
-        },
-        "stairDelivery": {
-          "indexNo": 13,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>stairDelivery}",
-          "@cds.persistence.name": "STAIRDELIVERY"
-        },
-        "sundayDelivery": {
-          "indexNo": 14,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>sundayDelivery}",
-          "@cds.persistence.name": "SUNDAYDELIVERY"
-        },
-        "unpackedUncrate": {
-          "indexNo": 15,
-          "type": "cds.Boolean",
-          "@Common.Label": "{i18n>unpackedUncrate}",
-          "@cds.persistence.name": "UNPACKEDUNCRATE"
-        }
-      },
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_DELIVERYATTRIBUTES"
-    },
-    "com.skipum.shippingExecution.CarrierAccount": {
-      "kind": "type",
-      "type": "cds.String",
-      "length": 50,
-      "@Common.Label": "{i18n>carrierAccount}",
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_CARRIERACCOUNT"
-    },
-    "com.skipum.shippingExecution.Enabled": {
-      "kind": "type",
-      "type": "cds.Boolean",
-      "@Common.Label": "{i18n>enabled}",
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_ENABLED"
-    },
-    "com.skipum.shippingExecution.CarrierPayer": {
-      "kind": "entity",
-      "elements": {
-        "payer": {
-          "indexNo": 1,
-          "type": "cds.Association",
-          "target": "com.skipum.shippingExecution.Payer",
-          "@Common.Text.$value": {
-            "=": "payer.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@Common.ValueList.entity": "CarrierPayers",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "foreignKeys": {
-            "code": {
-              "path": "code",
-              "indexNo": 1,
-              "generatedFieldName": "payer_code",
-              "@cds.persistence.name": "CODE"
-            }
-          },
-          "@Common.Label": "{i18n>carrierPayer}",
-          "@cds.persistence.name": "PAYER"
-        },
-        "account": {
-          "indexNo": 2,
-          "type": "cds.String",
-          "length": 50,
-          "@Common.Label": "{i18n>carrierAccount}",
-          "@cds.persistence.name": "ACCOUNT"
-        },
-        "payer_code": {
-          "type": "cds.String",
-          "length": 3,
-          "@odata.foreignKey4": "payer",
-          "@Common.Text.$value": {
-            "=": "payer.name"
-          },
-          "@Common.Text.@UI.TextArrangement": {
-            "#": "TextOnly"
-          },
-          "@Common.ValueList.entity": "CarrierPayers",
-          "@Common.ValueList.type": {
-            "#": "fixed"
-          },
-          "@Common.ValueListWithFixedValues": true,
-          "@Common.Label": "{i18n>carrierPayer}",
-          "@cds.persistence.name": "PAYER_CODE"
-        }
-      },
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_CARRIERPAYER"
-    },
-    "com.skipum.shippingExecution.RequiredDeliveryDate": {
-      "kind": "type",
-      "type": "cds.Date",
-      "@Common.Label": "{i18n>requiredDeliveryDate}",
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_REQUIREDDELIVERYDATE"
-    },
-    "com.skipum.shippingExecution.RequestedDeliveryDate": {
-      "kind": "type",
-      "type": "cds.Date",
-      "@Common.Label": "{i18n>requestedDeliveryDate}",
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_REQUESTEDDELIVERYDATE"
-    },
-    "com.skipum.shippingExecution.ShippingDates": {
-      "kind": "type",
-      "elements": {
-        "shipDate": {
-          "indexNo": 1,
-          "type": "cds.Date",
-          "@Common.Label": "{i18n>shipDate}",
-          "@cds.persistence.name": "SHIPDATE"
-        },
-        "requestedDeliveryDate": {
-          "indexNo": 2,
-          "type": "cds.Date",
-          "@Common.Label": "{i18n>requestedDeliveryDate}",
-          "@cds.persistence.name": "REQUESTEDDELIVERYDATE"
-        },
-        "requiredDeliveryDate": {
-          "indexNo": 3,
-          "type": "cds.Date",
-          "@Common.Label": "{i18n>requiredDeliveryDate}",
-          "@cds.persistence.name": "REQUIREDDELIVERYDATE"
-        }
-      },
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_SHIPPINGDATES"
-    },
-    "com.skipum.shippingExecution.References": {
-      "kind": "type",
-      "elements": {
-        "shipper": {
-          "indexNo": 1,
-          "type": "cds.String",
-          "length": 50,
-          "@Common.Label": "{i18n>shipperReference}",
-          "@cds.persistence.name": "SHIPPER"
-        },
-        "consignee": {
-          "indexNo": 2,
-          "type": "cds.String",
-          "length": 50,
-          "@Common.Label": "{i18n>consigneeReference}",
-          "@cds.persistence.name": "CONSIGNEE"
-        },
-        "miscellaneous1": {
-          "indexNo": 3,
-          "type": "cds.String",
-          "length": 50,
-          "@Common.Label": "{i18n>miscellaneousReference1}",
-          "@cds.persistence.name": "MISCELLANEOUS1"
-        },
-        "miscellaneous2": {
-          "indexNo": 4,
-          "type": "cds.String",
-          "length": 50,
-          "@Common.Label": "{i18n>miscellaneousReference2}",
-          "@cds.persistence.name": "MISCELLANEOUS2"
-        },
-        "miscellaneous3": {
-          "indexNo": 5,
-          "type": "cds.String",
-          "length": 50,
-          "@Common.Label": "{i18n>miscellaneousReference3}",
-          "@cds.persistence.name": "MISCELLANEOUS3"
-        },
-        "miscellaneous4": {
-          "indexNo": 6,
-          "type": "cds.String",
-          "length": 50,
-          "@Common.Label": "{i18n>miscellaneousReference4}",
-          "@cds.persistence.name": "MISCELLANEOUS4"
-        },
-        "miscellaneous5": {
-          "indexNo": 7,
-          "type": "cds.String",
-          "length": 50,
-          "@Common.Label": "{i18n>miscellaneousReference5}",
-          "@cds.persistence.name": "MISCELLANEOUS5"
-        }
-      },
-      "@cds.persistence.name": "COM_SKIPUM_SHIPPINGEXECUTION_REFERENCES"
     }
   },
   "version": {

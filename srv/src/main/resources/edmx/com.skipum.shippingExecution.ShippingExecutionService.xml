@@ -34,9 +34,7 @@
     <Schema Namespace="com.skipum.shippingExecution.ShippingExecutionService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
       <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
         <EntitySet Name="CarrierPayers" EntityType="com.skipum.shippingExecution.ShippingExecutionService.CarrierPayers"/>
-        <EntitySet Name="ContainerTypes" EntityType="com.skipum.shippingExecution.ShippingExecutionService.ContainerTypes"/>
         <EntitySet Name="IncoTerms" EntityType="com.skipum.shippingExecution.ShippingExecutionService.IncoTerms"/>
-        <EntitySet Name="PackagingTypes" EntityType="com.skipum.shippingExecution.ShippingExecutionService.PackagingTypes"/>
         <EntitySet Name="PaymentTerms" EntityType="com.skipum.shippingExecution.ShippingExecutionService.PaymentTerms"/>
         <EntitySet Name="ShipmentLegPackingStatuses" EntityType="com.skipum.shippingExecution.ShippingExecutionService.ShipmentLegPackingStatuses"/>
         <EntitySet Name="ShipmentLegPrintingStatuses" EntityType="com.skipum.shippingExecution.ShippingExecutionService.ShipmentLegPrintingStatuses"/>
@@ -54,21 +52,7 @@
         <Property Name="name" Type="Edm.String" MaxLength="60"/>
         <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
       </EntityType>
-      <EntityType Name="ContainerTypes">
-        <Key>
-          <PropertyRef Name="code"/>
-        </Key>
-        <Property Name="name" Type="Edm.String" MaxLength="60"/>
-        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
-      </EntityType>
       <EntityType Name="IncoTerms">
-        <Key>
-          <PropertyRef Name="code"/>
-        </Key>
-        <Property Name="name" Type="Edm.String" MaxLength="60"/>
-        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
-      </EntityType>
-      <EntityType Name="PackagingTypes">
         <Key>
           <PropertyRef Name="code"/>
         </Key>
@@ -184,32 +168,6 @@
         </Annotation>
         <Annotation Term="UI.HiddenFilter" Bool="true"/>
       </Annotations>
-      <Annotations Target="com.skipum.shippingExecution.ShippingExecutionService.ContainerTypes" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Container Type"/>
-      </Annotations>
-      <Annotations Target="com.skipum.shippingExecution.ShippingExecutionService.EntityContainer/ContainerTypes" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Capabilities.DeleteRestrictions">
-          <Record Type="Capabilities.DeleteRestrictionsType">
-            <PropertyValue Property="Deletable" Bool="false"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.InsertRestrictions">
-          <Record Type="Capabilities.InsertRestrictionsType">
-            <PropertyValue Property="Insertable" Bool="false"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.UpdateRestrictions">
-          <Record Type="Capabilities.UpdateRestrictionsType">
-            <PropertyValue Property="Updatable" Bool="false"/>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="com.skipum.shippingExecution.ShippingExecutionService.ContainerTypes/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Handling Unit Type"/>
-        <Annotation Term="Common.Text" Path="name">
-          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
-        </Annotation>
-      </Annotations>
       <Annotations Target="com.skipum.shippingExecution.ShippingExecutionService.IncoTerms" xmlns="http://docs.oasis-open.org/odata/ns/edm">
         <Annotation Term="Common.Label" String="Incoterms"/>
         <Annotation Term="UI.Identification">
@@ -247,32 +205,6 @@
           <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
         </Annotation>
         <Annotation Term="UI.HiddenFilter" Bool="true"/>
-      </Annotations>
-      <Annotations Target="com.skipum.shippingExecution.ShippingExecutionService.PackagingTypes" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Packaging Type"/>
-      </Annotations>
-      <Annotations Target="com.skipum.shippingExecution.ShippingExecutionService.EntityContainer/PackagingTypes" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Capabilities.DeleteRestrictions">
-          <Record Type="Capabilities.DeleteRestrictionsType">
-            <PropertyValue Property="Deletable" Bool="false"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.InsertRestrictions">
-          <Record Type="Capabilities.InsertRestrictionsType">
-            <PropertyValue Property="Insertable" Bool="false"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.UpdateRestrictions">
-          <Record Type="Capabilities.UpdateRestrictionsType">
-            <PropertyValue Property="Updatable" Bool="false"/>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="com.skipum.shippingExecution.ShippingExecutionService.PackagingTypes/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Packaging Type"/>
-        <Annotation Term="Common.Text" Path="name">
-          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
-        </Annotation>
       </Annotations>
       <Annotations Target="com.skipum.shippingExecution.ShippingExecutionService.PaymentTerms" xmlns="http://docs.oasis-open.org/odata/ns/edm">
         <Annotation Term="Common.Label" String="Payment Terms"/>

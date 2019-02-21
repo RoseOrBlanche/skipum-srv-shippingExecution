@@ -1,0 +1,115 @@
+{
+    "definitions": {
+        "com.skipum.common.CommonService.Countries": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CommonService.Currencies": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CommonService.DistanceUnits": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CommonService.Regions": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "country_code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                },
+                "country": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CommonService.Countries",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "country.code"
+                            },
+                            {
+                                "=": "country_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "country.code = country_code"
+                }
+            }
+        },
+        "com.skipum.common.CommonService.VolumeUnits": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CommonService.WeightUnits": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        }
+    }
+}

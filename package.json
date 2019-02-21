@@ -10,8 +10,7 @@
 	"dependencies": {
 		"@sap/cds": "^3.5.0",
 		"express": "^4.16.4",
-		"@contax/skipum-common": "https://github.com/RoseOrBlanche/skipum-cds-common.git",
-		"@contax/skipum-shippingExecution": "https://github.com/RoseOrBlanche/skipum-cds-shippingExecution.git"
+		"@contax/skipum-common": "https://github.com/RoseOrBlanche/skipum-cds-common.git"
 	},
 	"engines": {
 		"node": ">=8"

@@ -1,0 +1,417 @@
+{
+    "definitions": {
+        "com.skipum.common.CarrierService.CarrierActions": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "actionCode_code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "carrier_code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "enabled": {
+                    "type": "cds.Boolean"
+                },
+                "provider_code": {
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "actionCode": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.ContentActions",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "actionCode.code"
+                            },
+                            {
+                                "=": "actionCode_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "actionCode.code = actionCode_code"
+                },
+                "carrier": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.Carriers",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "carrier.code"
+                            },
+                            {
+                                "=": "carrier_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "carrier.code = carrier_code"
+                },
+                "provider": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.ContentSources",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "provider.code"
+                            },
+                            {
+                                "=": "provider_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "provider.code = provider_code"
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.CarrierFeeds": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "feed_code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "carrier_code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "enabled": {
+                    "type": "cds.Boolean"
+                },
+                "provider_code": {
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "feed": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.ContentFeeds",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "feed.code"
+                            },
+                            {
+                                "=": "feed_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "feed.code = feed_code"
+                },
+                "carrier": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.Carriers",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "carrier.code"
+                            },
+                            {
+                                "=": "carrier_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "carrier.code = carrier_code"
+                },
+                "provider": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.ContentSources",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "provider.code"
+                            },
+                            {
+                                "=": "provider_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "provider.code = provider_code"
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.Carriers": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                },
+                "logo_url": {
+                    "type": "cds.String",
+                    "length": 200
+                },
+                "site_url": {
+                    "type": "cds.String",
+                    "length": 200
+                },
+                "enabled": {
+                    "type": "cds.Boolean"
+                },
+                "services": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.Services",
+                    "cardinality": {
+                        "targetMax": "*"
+                    },
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "services.carrier_code"
+                            },
+                            {
+                                "=": "code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "services.carrier_code = code"
+                },
+                "actions": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.CarrierActions",
+                    "cardinality": {
+                        "targetMax": "*"
+                    },
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "actions.carrier_code"
+                            },
+                            {
+                                "=": "code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "actions.carrier_code = code"
+                },
+                "feeds": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.CarrierFeeds",
+                    "cardinality": {
+                        "targetMax": "*"
+                    },
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "feeds.carrier_code"
+                            },
+                            {
+                                "=": "code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "feeds.carrier_code = code"
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.ContentActions": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.ContentFeeds": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.ContentSources": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.ModeOfTransports": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.ServiceSubTypes": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.ServiceTypes": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                }
+            }
+        },
+        "com.skipum.common.CarrierService.Services": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "code": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "name": {
+                    "type": "cds.String",
+                    "length": 60
+                },
+                "enabled": {
+                    "type": "cds.Boolean"
+                },
+                "modeOfTransport_code": {
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "serviceType_code": {
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "serviceSubType_code": {
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "carrier_code": {
+                    "type": "cds.String",
+                    "length": 3
+                },
+                "modeOfTransport": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.ModeOfTransports",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "modeOfTransport.code"
+                            },
+                            {
+                                "=": "modeOfTransport_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "modeOfTransport.code = modeOfTransport_code"
+                },
+                "serviceType": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.ServiceTypes",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "serviceType.code"
+                            },
+                            {
+                                "=": "serviceType_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "serviceType.code = serviceType_code"
+                },
+                "serviceSubType": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.ServiceSubTypes",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "serviceSubType.code"
+                            },
+                            {
+                                "=": "serviceSubType_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "serviceSubType.code = serviceSubType_code"
+                },
+                "carrier": {
+                    "type": "cds.Association",
+                    "target": "com.skipum.common.CarrierService.Carriers",
+                    "onCond": {
+                        "args": [
+                            {
+                                "=": "carrier.code"
+                            },
+                            {
+                                "=": "carrier_code"
+                            }
+                        ],
+                        "op": "="
+                    },
+                    "on": "carrier.code = carrier_code"
+                }
+            }
+        }
+    }
+}
